@@ -1,11 +1,8 @@
 function Car(containerId) {
     this._engine = new Engine(),
         this._gearbox = new Gearbox(),
-
         this._logger = new Logger(),
         this._view = new CarView(),
-
-        // this._render(containerId)
         this._view.render(containerId);
 }
 
@@ -27,26 +24,15 @@ Car.prototype = {
 
     _carCannotBeStarted: function () {
         this._logger.log('ERROR')
-
         this._view.drawStatus(' STOP')
     },
+
     _carStarted: function () {
         this._logger.log('OK')
         this._view.drawStatus(' START ENGINE')
     },
 
-
-
 };
-
-
-
-
-
-
-
-
-
 
 
 // document.addEventListener('DOMContentLoaded', () => {

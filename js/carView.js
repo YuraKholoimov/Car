@@ -1,4 +1,6 @@
-function CarView() {};
+function CarView(owner) {
+    this._owner = owner;
+}
 
 CarView.prototype = {
     render: function (containerId) {
@@ -19,17 +21,31 @@ CarView.prototype = {
         this._statusLabels = document.getElementById(containerId).querySelectorAll("[data-role='status']");
         this._gearBoxValueLabels = document.getElementById(containerId).querySelectorAll("[data-role='gear-box-value']");
 
-        
+        let that = this;
+
+        this._processEls(this._startButtons, function(startButton) {
+            startButton.addEventListener('cklic', function(ev) {
+                that._carStartListener(ev);
+            });        
+        }); 
     },
-    drawStatus: function (status) {
-        this._processEls(this._statusLabels, function (item) {
+
+    drawStatus: function(status) {
+        this._processEls(this._statusLabels, function(item) {
             item.innerHTML = status;
         });
     },
-    _processEls: function (arrayOfEls, processor) {
+
+    _processEls: function(arrayOfEls, processor) {
         for (let i = 0; i < arrayOfEls.length; i++) {
             const item = arrayOfEls[i];
-            processor(item);
+            processor.apply(this, [item]);
         }
+    },
+
+    _carStartListener: function(ev) {
+        this._owner.start();
+
     }
+    
 };
